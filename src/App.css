@@ -1,38 +1,372 @@
-.App {
+* {
+  box-sizing: border-box;
+}
+.header {
+  /* background-color: red; */
+  height: auto;
+  width: 60%;
+  margin: auto;
+}
+.header-h6 {
+  text-align: center;
+  color: white;
+}
+.main_form {
+  background-color: black;
+  width: 50%;
+  height: auto;
+  margin: auto;
+  box-sizing: border-box;
+  margin-top: 80px;
+  padding: 50px;
+  opacity: 0.7;
+}
+
+.stepper {
+  /* background-color: blanchedalmond; */
+  width: 60%;
+  margin: auto;
+}
+.form-icon {
+  color: white;
+  margin-left: 980px;
+  margin-top: 10px;
+  font-size: 40px;
+}
+body {
+  background-image: url("https://img.freepik.com/premium-photo/beautiful-kaaba-hajj-piglrimage-mecca-umra-eid-al-adha-photo-background-illustration_327072-6946.jpg");
+  background-size: cover; /* Adjust to 'contain' or '100% auto' if needed */
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  background-attachment: fixed;
+}
+.label-booking {
+  color: white;
+}
+.contactus_form {
+  background-color: black;
+  width: 30%;
+  height: auto;
+  margin: auto;
+  box-sizing: border-box;
+  margin-top: 80px;
+  padding: 40px;
+  opacity: 0.7;
+}
+
+.hr-line {
+  height: 2px; /* Adjust the height to make it thicker */
+  background-color: white; /* Set the color of the horizontal line */
+  border: none; /* Remove the default border */
+  width: 50%;
+  margin: auto;
+}
+.step-icon {
+  background-color: white;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.stepper2 {
+  /* background-color: aqua; */
+  height: auto;
+  border: none; /* Remove the default border */
+  width: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+}
+.div-btn {
+  height: 100px;
+  background-color: black;
+  margin: auto;
+  width: 74%;
+  opacity: 0.9;
+}
+.div-btn-row {
+  /* background-color: aqua; */
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+/* css for card */
+.card-item {
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+}
+.card-img {
+  width: 100%;
+  height: 180px;
+  /* background-color: aquamarine; */
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 30px;
+}
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.card-left-content {
+  /* background-color: antiquewhite; */
+  width: 50%;
+  display: inline-block;
+}
+.card-right-content {
+  /* background-color: lightcoral; */
+  width: 50%;
+  display: inline-block;
+}
+.card-btn {
+  width: 100%;
+  margin-top: 20px;
+}
+.vehicles-card-row {
+  /* background-color: black; */
+  width: 74%;
+  margin: auto;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+/* css for package */
+#package-btns {
+  width: 100px;
+}
+
+/* css for login page */
+.login-container {
+  background-color: black;
+  width: fit-content;
+  height: auto;
+  margin: auto;
+  margin-top: 13%;
+  padding: 30px;
+  opacity: 0.7;
+}
+.login-header h3 {
+  text-align: center;
+}
+.login-header p {
+  text-align: center;
+}
+.login-phone {
+  /* background-color: antiquewhite; */
+  display: flex;
+}
+#login-btn {
+  margin-top: 20px;
+  height: 40px;
+  text-align: center;
+  margin-left: 70%;
+  color: white;
+}
+.login-phone-input {
+  width: 300px;
+  height: 40px;
+}
+.login-phone-code {
+  height: 40px;
+  width: 100px;
+}
+#login-btns {
+  width: 100px;
+  margin: 10px;
+}
+
+/* css for otp page */
+.otp-container {
+  width: 35%;
+  height: auto;
+  margin: auto;
+  background-color: black;
+  margin-top: 10%;
+  padding-top: 30px;
+  padding-bottom: 30px;
+  opacity: 0.8;
+}
+
+.otp-number {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+}
+.opt-number-div {
+  height: 60px;
+  width: 60px;
+  background-color: aliceblue;
+  border-radius: 6px;
+}
+.otp-btn-div {
+  /* background-color: beige; */
+  width: 100%;
+  margin-top: 30px;
+  box-sizing: border-box;
+  padding-left: 35%;
+}
+.otp-code {
+  height: 100%;
+  width: 100%;
+}
+#otp-btn {
+  margin: auto;
+}
+.otp-code {
+  font-size: 40px;
+  /* color: red; */
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* css for select package page */
+#scrollspy {
+  background-color: white;
+  height: 400px;
+  width: 45%;
+  margin: auto;
+  padding: "25px";
+  margin-top: 30px;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+#scrollspy-div {
+  height: 140px;
+  width: 100%;
+  /* background-color: aqua; */
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.selectpackage-btn-div {
+  height: auto;
+  width: 45%;
+  /* background-color: aliceblue; */
+  margin: auto;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.selectpackage-btns {
   color: white;
+  font-size: 40px;
 }
 
-.App-link {
-  color: #61dafb;
+/* css for scrlspycard */
+
+#scrlspycrd {
+  /* background-color: blanchedalmond; */
+  height: 100%;
+  width: 100%;
+  display: flex;
+  padding: 10px;
+}
+#scrlspycrd img {
+  margin-right: 30px;
+  height: 115px;
+  width: 200px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.14);
+}
+#scrlspycrd p {
+  margin: auto;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+@media (max-width: 576px) {
+  /* for otp page */
+  .otp-container {
+    width: 90%;
+    margin-top: 130px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .otp-number {
+    flex-wrap: wrap;
+  }
+
+  .otp-code {
+    margin-bottom: 10px;
+  }
+  .opt-number-div {
+    height: 50px;
+    width: 50px;
+  }
+  /* contactus form */
+  .contactus_form {
+    width: 80%; /* Adjust width for smaller screens */
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+  /* for login form */
+  .login-container {
+    width: 90%; /* Adjust width for smaller screens */
+    margin-top: 130px;
+  }
+  #login-btn {
+    margin-left: 60%;
+  }
+  /* for booking form */
+  .header,
+  .main_form {
+    width: 90%; /* Adjusted width for smaller screens */
+    padding: 10px;
+  }
+  .form-icon {
+    margin-left: 280px;
+  }
+  /* for select package */
+  #scrollspy {
+    height: 400px;
+    width: 90%;
+    margin: auto;
+    padding: "10px";
+    margin-top: 30px;
+  }
+  #scrollspy-div {
+    height: fit-content;
+    width: 100%;
+    /* background-color: aqua; */
+    margin-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  /* for scrlspycrd */
+  #scrlspycrd img {
+    margin-right: 10px;
+    height: 150px;
+    width: 180px;
+  }
+  #scrlspycrd-price {
+    font-size: 10px;
+  }
+  .selectpackage-btn-div {
+    margin-top: 20px;
+  }
+
+  /* css for package page */
+  .div-btn-row {
+    /* background-color: red; */
+    height: auto;
+    display: block;
+    padding: 30px;
+  }
+  .div-btn {
+    height: auto;
+    margin-bottom: 20px;
+  }
+  #package-btns {
+    width: 260px;
+    margin-top: 10px;
+    margin-right: 10px;
+  }
+  /* css for login page */
+  #login-btns {
+    width: 200px;
+    margin: 10px;
   }
 }
