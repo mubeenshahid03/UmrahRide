@@ -13,6 +13,7 @@ app.use(express.json());
 // routes
 app.use("/api/vehicles/", require("./Routes/vehicles"));
 
+app.use("/api/users",require("./Routes/users"))
 //code for multer setup and use
 app.use("/", express.static("uploads"));
 // Set up Multer storage

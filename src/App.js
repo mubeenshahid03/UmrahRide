@@ -14,28 +14,30 @@ import Vehicles from "./Components/Vehicles";
 import Packages from "./Components/Packages";
 import ContactUs from "./Components/ContactUs";
 import CarState from "./context/cars/Carpk"
-import Login from "./Components/login";
+import { app, auth } from "./firebase";
 import Otp from "./Components/Otp";
 import Selectpackage from "./Components/Selectpackage";
+import Signinform from "./Components/Signinform";
+
 
 function App() {
   return (
     <>
     
-      <CarState>
       <Router>
+      <CarState>
         <Navbar />
         <Routes>
-          <Route exact path="*" element={<Booking />} />
+          <Route exact path="/home" element={<Booking />} />
           <Route exact path="/vehicles" element={<Vehicles />} />
           <Route exact path="/packages" element={<Packages />} />
           <Route exact path="/contactus" element={<ContactUs />} />
-          <Route exact path="/login" element={<Login />} />
+          <Route exact path="/login" element={<Signinform /> } />
           <Route exact path="/otp" element={<Otp />} />
           <Route exact path="/selectpackage" element={<Selectpackage />} />
         </Routes>
-      </Router>
       </CarState>        
+      </Router>
     
     
     

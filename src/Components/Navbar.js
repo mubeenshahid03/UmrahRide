@@ -1,14 +1,26 @@
 import { Button } from "antd";
 
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 function Navbar() {
+  
+  const [isMenuOpen, setMenuOpen] = useState(false);
+  const handleMenuToggle = () => {
+    setMenuOpen(true);
+  };
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
+  
   return (
+    
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-top">
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+          <Link className="navbar-brand" to="/home" onClick={closeMenu}> 
             UmrahRide.co
           </Link>
           <button
@@ -19,43 +31,45 @@ function Navbar() {
             aria-controls="navbarNavDropdown"
             aria-expanded="false"
             aria-label="Toggle navigation"
+            onClick={handleMenuToggle}
+
           >
             <span className="navbar-toggler-icon" />
           </button>
-          <div className="collapse navbar-collapse" id="navbarNavDropdown">
+          <div className={`collapse navbar-collapse ${isMenuOpen? "show":"" }`} id="navbarNavDropdown">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <Link className="nav-link active" aria-current="page" to="/home" onClick={closeMenu}>
                   Booking
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/vehicles">
+                <Link className="nav-link" to="/vehicles" onClick={closeMenu}>
                   Vehicles
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/packages">
+                <Link className="nav-link" to="/packages" onClick={closeMenu}>
                   Packages
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/contactus">
+                <Link className="nav-link" to="/contactus" onClick={closeMenu}>
                   ContactUs
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/login">
+                <Link className="nav-link" to="/login"onClick={closeMenu}>
                   Login
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/otp">
+                <Link className="nav-link" to="/otp" onClick={closeMenu}>
                   OTP
                 </Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/selectpackage">
+                <Link className="nav-link" to="/selectpackage" onClick={closeMenu}>
                   Selectpackage
                 </Link>
               </li>

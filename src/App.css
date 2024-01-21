@@ -148,7 +148,7 @@ body {
 .login-container {
   background-color: black;
   width: fit-content;
-  height: auto;
+  height: 300px;
   margin: auto;
   margin-top: 13%;
   padding: 30px;
@@ -165,10 +165,7 @@ body {
   display: flex;
 }
 #login-btn {
-  margin-top: 20px;
-  height: 40px;
   text-align: center;
-  margin-left: 70%;
   color: white;
 }
 .login-phone-input {
@@ -182,6 +179,25 @@ body {
 #login-btns {
   width: 100px;
   margin: 10px;
+}
+#login-btn-div {
+  height: 80px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-around;
+  /* background-color: lightblue; */
+}
+#recaptcha-container{
+  /* background-color: aqua; */
+  margin-top: 10px;
+  height: 130px;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* css for otp page */
@@ -213,7 +229,10 @@ body {
   width: 100%;
   margin-top: 30px;
   box-sizing: border-box;
-  padding-left: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
 }
 .otp-code {
   height: 100%;
@@ -307,9 +326,7 @@ body {
     width: 90%; /* Adjust width for smaller screens */
     margin-top: 130px;
   }
-  #login-btn {
-    margin-left: 60%;
-  }
+
   /* for booking form */
   .header,
   .main_form {
