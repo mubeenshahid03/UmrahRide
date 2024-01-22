@@ -28,6 +28,7 @@ function App() {
       <CarState>
         <Navbar />
         <Routes>
+        <Route exact path="/" element={<Booking />} />
           <Route exact path="/home" element={<Booking />} />
           <Route exact path="/vehicles" element={<Vehicles />} />
           <Route exact path="/packages" element={<Packages />} />

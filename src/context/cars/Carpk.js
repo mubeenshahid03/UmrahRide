@@ -188,7 +188,7 @@ const CarState = (props) => {
       navigate('/home')
       
     } catch (error) {
-      console.log("error in frontend fitervehicles" + error);
+      console.log("error in frontend add user" + error);
     }
   };
   const handleClick = async (recaptchaContainerId) => {

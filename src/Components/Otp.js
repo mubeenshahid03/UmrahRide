@@ -5,7 +5,7 @@ import { useContext } from "react";
 import carContext from "../context/cars/carContext";
 import firebase from "../firebase";
 function Otp() {
-  const { otpCode,setotpCode,verifyOtp } = useContext(carContext);
+  const { otpCode,setotpCode,verifyOtp,Number } = useContext(carContext);
   const [OTP, setOTP] = useState(null);
   const handleOTPinput = (otp) => {
     setOTP(otp);
@@ -15,14 +15,14 @@ function Otp() {
     console.log(OTP);
   };
 
-  let _otp = "03006673885";
+  
   return (
     <>
       <div className="otp-container">
         <h3 style={{ textAlign: "center", color: "white" }}>UmrahRide.co</h3>
         <p style={{ textAlign: "center", color: "white" }}>
           {" "}
-          Enter otp send on {_otp}{" "}
+          Enter otp send on {Number}{" "}
         </p>
         <div className="otp-number mt-5">
           <OTPInput
