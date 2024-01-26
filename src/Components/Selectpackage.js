@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
     CarFilled,
     EnvironmentFilled,
     LeftCircleFilled,
@@ -10,9 +12,38 @@ import {
 import Scrlspycrd from './Scrlspycrd';
 import { useContext } from 'react';
 import carContext from '../context/cars/carContext';
+import { Button, message } from 'antd';
+import { useNavigate } from 'react-router-dom';
 function Selectpackage() {
-    const {cars,setcars}=useContext(carContext)
+    const {cars,setcars,fetchallvehicles,selectPackage,addpkg}=useContext(carContext)
+    const navigate =useNavigate()
+    useEffect(() => {
+      fetchallvehicles()
+    }, [])
+      const handlearrowright=()=>{
+        if(!localStorage.getItem("jwtoken")){
+          navigate('/login')
+          message.info("Please Login")
+        }
+        else{
+          if(selectPackage){
+            addpkg();
+            //here is the component of personzel info 
+            navigate('/customerinfo')
+          }
+          else{
+            return message.error("Please Select package")
+          }
 
+
+        } 
+      
+
+        
+      }
+      const handlearrowleft=()=>{
+        navigate('/home')
+      }
 
 
     return (
@@ -94,13 +125,30 @@ function Selectpackage() {
     >
         
       {cars.map((car, index) => (
-        <div id='scrollspy-div'><Scrlspycrd car={car} key={index} /> </div>
+        <div id='scrollspy-div'><Scrlspycrd  car={car} key={index} /> </div>
       ))}
         
     </div>
     <div className='selectpackage-btn-div'> 
-        <LeftCircleFilled   className='selectpackage-btns' />
-        <RightCircleFilled className='selectpackage-btns'  />
+    <Button
+                htmlType="submit"
+                shape="circle"
+                icon={<ArrowLeftOutlined />}
+                size="large"
+                style={{border:"none"}}
+                onClick={handlearrowleft}
+
+              />
+        <Button
+                htmlType="submit"
+                shape="circle"
+                icon={<ArrowRightOutlined />}
+                size="large"
+                style={{border:"none"}}
+                onClick={handlearrowright}
+
+              />
+              
     </div>
         
     

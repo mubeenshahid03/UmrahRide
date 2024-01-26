@@ -1,9 +1,19 @@
 import React from 'react'
-
+import { useContext } from 'react'
+import carContext from '../context/cars/carContext'
 function Scrlspycrd(props) {
+  const{selectPackage,setselectPackage}=useContext(carContext)
+  const handleselectpackage=()=>{
+    console.log(props.car)
+    setselectPackage(props.car)
+    
+
+  }
+
+
   return (
     <>
-    <div id='scrlspycrd'>
+    <div id='scrlspycrd' onClick={handleselectpackage}>
     <img    src="https://images.pexels.com/photos/215528/pexels-photo-215528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
         <span>
         <h5>{props.car.name}</h5>

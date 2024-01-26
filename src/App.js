@@ -18,6 +18,8 @@ import { app, auth } from "./firebase";
 import Otp from "./Components/Otp";
 import Selectpackage from "./Components/Selectpackage";
 import Signinform from "./Components/Signinform";
+import CustomerInfo from "./Components/CustomerInfo";
+import Bookingsummary from "./Components/Bookingsummary";
 
 
 function App() {
@@ -36,6 +38,8 @@ function App() {
           <Route exact path="/login" element={<Signinform /> } />
           <Route exact path="/otp" element={<Otp />} />
           <Route exact path="/selectpackage" element={<Selectpackage />} />
+          <Route exact path="/customerinfo" element={<CustomerInfo />} />
+          <Route exact path="/bookingsummary" element={<Bookingsummary />} />
         </Routes>
       </CarState>        
       </Router>

@@ -39,7 +39,7 @@ function Navbar() {
           <div className={`collapse navbar-collapse ${isMenuOpen? "show":"" }`} id="navbarNavDropdown">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/home" onClick={closeMenu}>
+                <Link className="nav-link " aria-current="page" to="/home" onClick={closeMenu}>
                   Booking
                 </Link>
               </li>
@@ -58,7 +58,7 @@ function Navbar() {
                   ContactUs
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/login"onClick={closeMenu}>
                   Login
                 </Link>
@@ -73,6 +73,17 @@ function Navbar() {
                   Selectpackage
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/customerinfo" onClick={closeMenu}>
+                  Cutomerinfo
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/bookingsummary" onClick={closeMenu}>
+                  booking summary
+                </Link>
+              </li> */}
+              
             </ul>
           </div>
           <div className="nav-icons d-flex justify-content-evenly align-items-center">

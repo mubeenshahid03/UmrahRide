@@ -6,7 +6,7 @@ const fetchuser=require("../Middleware/fetchuser")
 const Vehicle=require("../model/Vehicle")
 
 // path 1   http://localhost:8000/api/vehicles/addvehicle
-router.post("/addvehicle",fetchuser,async(request,response)=>{
+router.post("/addvehicle",async(request,response)=>{
     try {
 
         const{name,imgURL,cartype,seats,bags,doors,price,userid}=request.body
@@ -26,7 +26,7 @@ router.post("/addvehicle",fetchuser,async(request,response)=>{
 })
 
 // path 2   http://localhost:8000/api/vehicles/deletevehicle/_id
-router.post("/deletevehicle/:id",fetchuser,async(request,response)=>{
+router.post("/deletevehicle/:id",async(request,response)=>{
     try {
 
         if(!request.params.id){
@@ -49,7 +49,7 @@ router.post("/deletevehicle/:id",fetchuser,async(request,response)=>{
 })
 
 // path 3   http://localhost:8000/api/vehicles/editvehicle/_id
-router.put("/editvehicle/:id",fetchuser,async(request,response)=>{
+router.put("/editvehicle/:id",async(request,response)=>{
     try {
             let{name,cartype,seats,bags,doors,price,userid}=request.body
         if(!request.params.id){
@@ -81,7 +81,7 @@ router.put("/editvehicle/:id",fetchuser,async(request,response)=>{
 
 
 // path 4   http://localhost:8000/api/vehicles/fetchallvehicles?_id
-router.get("/fetchallvehicles/:id",fetchuser,async(request,response)=>{
+router.get("/fetchallvehicles/:id",async(request,response)=>{
     try {
             if(!request.params.id){
                 return response.status(400).json({error:"userid not enter in params"})
@@ -97,7 +97,7 @@ router.get("/fetchallvehicles/:id",fetchuser,async(request,response)=>{
 
 
 // path 5   http://localhost:8000/api/vehicles/filtervehicles/:name
-router.get("/filtervehicles/:name",fetchuser,async(request,response)=>{
+router.get("/filtervehicles/:name",async(request,response)=>{
     try {
             if(!request.params.name){
                 return response.status(400).json({error:"car name not enter in params"})

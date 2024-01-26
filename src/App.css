@@ -14,11 +14,11 @@
 .main_form {
   background-color: black;
   width: 50%;
-  height: auto;
+  height: 328px;
   margin: auto;
   box-sizing: border-box;
   margin-top: 80px;
-  padding: 50px;
+  padding: 40px;
   opacity: 0.7;
 }
 
@@ -38,7 +38,8 @@ body {
   background-size: cover; /* Adjust to 'contain' or '100% auto' if needed */
   background-position: center;
   background-repeat: no-repeat;
-  height: 100vh;
+  /* height: 100vh; */
+  
   background-attachment: fixed;
 }
 .label-booking {
@@ -265,13 +266,14 @@ body {
   padding-right: 10px;
 }
 .selectpackage-btn-div {
-  height: auto;
-  width: 45%;
+  height: 50px;
+  width: 90%;
   /* background-color: aliceblue; */
   margin: auto;
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  
 }
 .selectpackage-btns {
   color: white;
@@ -287,6 +289,12 @@ body {
   display: flex;
   padding: 10px;
 }
+#scrlspycrd:hover{
+  opacity: 0.7;
+  height: 99%;
+  width: 99%;
+  background-color: whitesmoke;
+}
 #scrlspycrd img {
   margin-right: 30px;
   height: 115px;
@@ -297,6 +305,27 @@ body {
 #scrlspycrd p {
   margin: auto;
 }
+/* css for booking summary */
+#booking-summary-content-left{
+  padding-inline: 100px;
+  margin-top: 30px;
+}
+#booking-summary-content-right{
+  padding-inline: 100px;
+  margin-top: 30px;
+}
+#booking-summary-price{
+  padding-block: 30px;
+  font-size: 30px;
+  color: skyblue;
+  
+}
+#book-summary-btn{
+  width: 73%;
+  margin: auto;
+  margin-block: 15px;
+}
+
 
 @media (max-width: 576px) {
   /* for otp page */
@@ -386,4 +415,20 @@ body {
     width: 200px;
     margin: 10px;
   }
+  /* css for booking summary */
+#booking-summary-content-left{
+  padding-inline: 10px;
+  margin-top: 20px;
+}
+#booking-summary-content-right{
+  padding-inline:5px;
+  margin-top: 5px;
+}
+#booking-summary-price{
+  padding-block: 40px;
+  font-size: 30px;
+  /* background-color: aqua; */
+  color:skyblue;
+  margin-top: 20px;
+}
 }

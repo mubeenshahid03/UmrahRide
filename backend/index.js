@@ -4,7 +4,7 @@ const port = 8000;
 var cors = require("cors");
 const multer = require("multer");
 const path = require("path"); // Make sure you have this line to import the 'path' module
-
+var jwt=require("jsonwebtoken")
 const connectToMongoose = require("./DB/db");
 app.use(cors());
 //convert to json form

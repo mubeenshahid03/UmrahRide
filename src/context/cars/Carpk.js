@@ -133,43 +133,67 @@ const CarState = (props) => {
   const [Number, setNumber] = useState(null);
   //below state disabled the getOTP button when user click on it
   const [isDisplaygetOTP, setisDisplaygetOTP] = useState(false);
-  const [user, setuser] = useState(null);
   const [otpCode, setotpCode] = useState(null);
 
-  // function that call on when user press get otp button in login page
-  //   const handleClick = (recaptchaContainerId) => {
-  //     console.log(Number);
-  //     if (Number == null) {
-  //       return message.error("Number Not Entered!");
-  //     }
-  //     setisDisplaygetOTP(true);
-  //     let recaptcha = new firebase.auth.RecaptchaVerifier(recaptchaContainerId);
+//for booking.js
+const [bookingInfo, setbookingInfo] = useState(null)
+//api path to add booking obj inDB http://localhost:8000/api/users/addbooking
+const addbooking=async()=>{
+  console.log("frppppppp")
+  console.log(bookingInfo)
+  try {
+    const response = await fetch(
+      "http://localhost:8000/api/users/addbooking",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":localStorage.getItem("jwtoken"),
+        },
+        body: JSON.stringify({bookingInfo})
+      }
+    );
+    let json = await response.json();
+    console.log("from addbooking")
+    console.log(json)
+    
+  } catch (error) {
+    console.log("error in frontend add booking frontend" + error);
+  } 
+}
 
-  //     firebase
-  //       .auth()
-  //       .signInWithPhoneNumber(Number, recaptcha)
-  //       .then(function (e) {
-  //         let code = prompt("enter otp", "");
-  //         if (code == null) {
-  //           return message.error("code is not entered!");
-  //         }
-  //         e.confirm(code)
-  //           .then(function (result) {
-  //             console.log("Number Verified");
-  //             console.log(result.user, "user");
-  //             console.log(result.user.phoneNumber, "user");
-  //             alert("congrats");
-  //           })
-  //           .catch(function (error) {
-  //             console.log("enter correct otp");
-  //             message.error("Enter Correct otp");
-  //           });
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //         message.error("error in otp frontend");
-  //       });
-  //   };
+// for selectpackage.js
+const [selectPackage, setselectPackage] = useState(null)
+const addpkg=async()=>{
+  try {
+    const response = await fetch(
+      "http://localhost:8000/api/users/addpkg",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token":localStorage.getItem("jwtoken"),
+        },
+        body: JSON.stringify({selectPackage})
+      }
+    );
+    let json = await response.json();
+    console.log("from addpkg")
+    console.log(json)
+    
+  } catch (error) {
+    console.log("error in frontend add package frontend" + error);
+  }
+
+
+}
+
+
+
+
+
+
+  
   const addUser = async () => {
     try {
       const response = await fetch(
@@ -183,54 +207,44 @@ const CarState = (props) => {
         }
       );
       let json = await response.json();
-      console.log(json);
-      console.log("first")
+      console.log("from frontend ok ok o k")
+      // console.log(json);
+      // console.log(json.authtoken)
+      console.log(json.registeredUser._id)
+      
+      
+      localStorage.setItem("jwtoken",json.authtoken)
+
+      
       navigate('/home')
       
     } catch (error) {
       console.log("error in frontend add user" + error);
     }
   };
-  const handleClick = async (recaptchaContainerId) => {
-    try {
-      if (Number == null) {
-        return message.error("Number Not Entered!");
-      }
 
-      setisDisplaygetOTP(true);
-      const recaptcha = new firebase.auth.RecaptchaVerifier(
-        recaptchaContainerId
-      );
-      
-      const confirmation = await firebase
-      .auth()
-      .signInWithPhoneNumber(Number, recaptcha);
-      
-      navigate('/otp')
-      // Store the confirmation object in state for later use
-      setuser(confirmation);
-      message.success("Message Sent  successfully!")
-      console.log("user object",confirmation)
-    } catch (error) {
-      console.log(error);
-      message.error("Error in OTP frontend");
-    }
-  };
-  const verifyOtp = async () => {
-    console.log(otpCode);
-    console.log(user, "empty");
 
-    try {
-      await user.confirm(otpCode);
-      console.log("Congratulations, number verified!");
-      //here api call to backend
-      addUser();
-      message.success("User Verified!")
-    } catch (error) {
-      console.log(error);
-      message.error("Enter Correct OTP");
-    }
-  };
+
+
+  
+const setupRecaptcha=async()=>{
+  const recaptcha = new firebase.auth.RecaptchaVerifier(
+          "recaptcha-container",
+          {}
+        );
+        recaptcha.render()
+        return  firebase.auth().signInWithPhoneNumber(Number,recaptcha)
+}
+
+// console.log("boookininfo from context")
+// console.log(bookingInfo)
+// console.log("pkg info from context")
+// console.log(selectPackage)
+
+
+
+
+
 
   // api request to fetch all vehicles
   const fetchallvehicles = async () => {
@@ -305,11 +319,19 @@ const CarState = (props) => {
         filtervehicles,
         Number,
         setNumber,
-        handleClick,
+        // handleClick,
         isDisplaygetOTP,
         otpCode,
         setotpCode,
-        verifyOtp,
+        // verifyOtp,
+        setupRecaptcha,
+        addUser,
+        bookingInfo,
+        setbookingInfo,
+        selectPackage,
+        setselectPackage,
+        addbooking,
+        addpkg,
       }}
     >
       {props.children}
