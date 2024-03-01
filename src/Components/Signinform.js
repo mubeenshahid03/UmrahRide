@@ -20,7 +20,7 @@ function Signinform() {
       setotp(otp)
     };
   const handleOtp=async()=>{
-console.log(Number)
+// console.log(Number)
     if(Number===""|| Number===undefined){
       return message.error("Enter Proper Number")
     }
