@@ -1,10 +1,10 @@
-import { Button } from "antd";
+import { Button, message } from "antd";
 
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
-  
+  const navigate=useNavigate()
   const [isMenuOpen, setMenuOpen] = useState(false);
   const handleMenuToggle = () => {
     setMenuOpen(true);
@@ -13,7 +13,12 @@ function Navbar() {
   const closeMenu = () => {
     setMenuOpen(false);
   };
-
+const handleClick=()=>{
+  closeMenu();
+  localStorage.removeItem("jwtoken")
+  navigate('/home')
+  message.warning("logout successfully")
+}
   
   return (
     
@@ -77,8 +82,23 @@ function Navbar() {
                 <Link className="nav-link" to="/customerinfo" onClick={closeMenu}>
                   Cutomerinfo
                 </Link>
-              </li>
+              </li> */}
+              {localStorage.getItem('jwtoken') &&
+              <>
               <li className="nav-item">
+                <Link className="nav-link" to="/userbookings" onClick={closeMenu}>
+                  User bookings
+                </Link>
+              </li>
+              
+              <li className="nav-item">
+      <Link className="nav-link" to="/login" onClick={handleClick} >
+        logout
+      </Link>
+    </li>
+    </>
+    }
+              {/* <li className="nav-item">
                 <Link className="nav-link" to="/bookingsummary" onClick={closeMenu}>
                   booking summary
                 </Link>

@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useContext } from 'react'
 import carContext from '../context/cars/carContext'
 function Scrlspycrd(props) {
   const{selectPackage,setselectPackage}=useContext(carContext)
+  
+  const [isClicked, setIsClicked] = useState(false);
+ 
+ 
   const handleselectpackage=()=>{
     console.log(props.car)
     setselectPackage(props.car)
+    setIsClicked(true);
     
 
   }
@@ -13,11 +18,11 @@ function Scrlspycrd(props) {
 
   return (
     <>
-    <div id='scrlspycrd' onClick={handleselectpackage}>
-    <img    src="https://images.pexels.com/photos/215528/pexels-photo-215528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+    <div id='scrlspycrd' onClick={handleselectpackage} className={isClicked ? 'clicked' : ''}>
+    <img    src={props.car.imgURL} />
         <span>
         <h5>{props.car.name}</h5>
-        <p>Car type : {props.car.type} </p>
+        <p>Car type : {props.car.cartype} </p>
         <p style={{fontSize:"12px"}}>Seates : {props.car.seats} , Bags : {props.car.bags}</p>
             <p style={{fontSize:"12px"}} > AC:{" "}
                 <span style={{ fontWeight: "bold", color: "lightgreen" }}>

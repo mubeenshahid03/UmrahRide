@@ -1,5 +1,5 @@
 const jwt=require("jsonwebtoken")
-const MY_SECRET_KEY="IAMMUBEENIAMA$OODBOY"
+const MY_SECRET_KEY=process.env.MYSECRETKEY
 
 
 

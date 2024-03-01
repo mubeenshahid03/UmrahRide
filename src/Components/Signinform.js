@@ -46,7 +46,7 @@ console.log(Number)
     try {
       await confirmationobj.confirm(otp);
       console.log("user login successfully")
-      navigate('/home')
+      // navigate('/home')
       addUser();
       message.success("User Verified Successfully! ")
     } catch (error) {
@@ -138,10 +138,10 @@ console.log(Number)
           <button
             id="otp-btn"
             type="button"
-            // onClick={displayOTP}
+            onClick={()=>{navigate('/home')}}
             class="btn btn-success  "
           >
-            Back to Login
+            Back to home
           </button>
           <button
             id="otp-btn"

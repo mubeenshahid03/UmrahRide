@@ -1,59 +1,130 @@
-import React from "react";
-import { Form, Input, Typography, Button } from "antd";
-import { CalendarFilled } from "@ant-design/icons";
+import React, { useState } from "react";
+import { Form, Input, Typography, Button, message } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { useContext } from "react";
 import carContext from "../context/cars/carContext";
 const { Title } = Typography;
 function ContactUs() {
-const{sendimg,imgURL}=useContext(carContext)
-let image=imgURL
-  const handleFileChange=(event)=>{
+  const { sendimg, imgURL } = useContext(carContext);
+  let image = imgURL;
+
+  const handleFileChange = (event) => {
     const file = event.target.files[0];
-    //  console.log(file)
     const formData = new FormData();
     formData.append('file', file);  
     sendimg(formData);
   }
 
+  
+  const [ContactsInfo, setContactsInfo] = useState({
+    name: "",
+      email: "",
+      subject: "",
+      message:""
+
+    });
+  
+    // Function to handle input changes and update the state
+    const handleInputChange = (field, value) => {
+   
+      setContactsInfo({
+        ...ContactsInfo,
+        [field]: value,
+      });
+    };
+    const handleSubmit=async()=>{
+      console.log(ContactsInfo)
+      if(!ContactsInfo.name||!ContactsInfo.email||!ContactsInfo.subject ||!ContactsInfo.message){
+          return message.error("Please fill complete Form!")
+      }
+     
+
+        try {
+          const response = await fetch(
+            "https://umrah-ride-backend-wr.vercel.app/api/bookings/addcontacts",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                // "auth-token":localStorage.getItem("jwtoken"),
+              },
+              body: JSON.stringify({ContactsInfo})
+            }
+          );
+          let json = await response.json();
+          console.log("from customerinfo")
+          console.log(json)
+          message.success("Thanks for Review!")
+          
+        
+        } catch (error) {
+          console.log("error in frontend contactus path",error)
+        }
+      
+    }
 
   return (
     <>
       <div className="contactus_form">
-        <Form className="custom-form">
+      
+        <div className="custom-form">
           <Title level={2} style={{ color: "white" }}>
-            Contact Us
+            Contacts Us
           </Title>
-          <Form.Item name="hotel_name">
-            <label htmlFor="hotel_name" className="label-booking">
+          <Form.Item name="name">
+            <label htmlFor="name" className="label-booking">
               Name:
             </label>
-            <Input placeholder="Enter you name"/>
+            <Input
+              placeholder="Enter your name"
+              onChange={(e) => handleInputChange("name", e.target.value)}
+            />
           </Form.Item>
-          <Form.Item name="datepicker">
-            <label htmlFor="datepicker" className="label-booking">
+          <Form.Item name="email">
+            <label htmlFor="email" className="label-booking">
               Email:
             </label>
-            <Input placeholder="Enter your email" />
+            <Input
+              placeholder="Enter your email"
+              onChange={(e) => handleInputChange("email", e.target.value)}
+            />
           </Form.Item>
-          <Form.Item name="pickup">
-            <label htmlFor="pickupfrom" className="label-booking">
-              Whatsapp:
+          <Form.Item name="subject">
+            <label htmlFor="subject" className="label-booking">
+              Subject:
             </label>
-            <Input placeholder="Enter whatsapp number"/>
+            <Input
+              placeholder="Enter subject"
+              onChange={(e) =>
+                handleInputChange("subject", e.target.value)
+              }
+            />
           </Form.Item>
-          <Form.Item name="comments">
-            <label htmlFor="email" className="label-booking">
+          <Form.Item name="message">
+            <label htmlFor="message" className="label-booking">
               Message:
             </label>
-            <TextArea placeholder="enter your message here" />
+            <Input
+              placeholder="Enter message"
+              onChange={(e) =>
+                handleInputChange("message", e.target.value)
+              }
+            />
           </Form.Item>
-          <Button style={{ width: "100%" }} type="primary">
+
+          <Button
+            style={{ width: "100%" }}
+            type="primary"
+            onClick={handleSubmit}
+          >
             Submit
           </Button>
-        </Form>
+        </div>
+
+        {/* uncomment only below two lines and also from index.js backend file to implement multer functionality */}
+{/*       
         <input type="file" name="file" accept="image/*" onChange={handleFileChange} />
-        <img height="100px" width="100px" src={imgURL} alt="here" />
+        <img height="100px" width="100px" src={imgURL} alt="here" /> */}
       </div>
     </>
   );

@@ -1,18 +1,26 @@
 import { Card, Col, Row } from 'antd';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { useContext } from 'react'
 import carContext from '../context/cars/carContext'
 import Pcard from './Pcard';
+import Spinner from './Spinner';
+import Bookingmodel from './Bookingmodel';
 
 function Packages() {
-  const {packages,setpackages} =useContext(carContext);
-  
+  useEffect(()=>{
+    fetchallpackages()
+    console.log(packages)
+  },[])
+
+
+  const {packages,setpackages,fetchallpackages,isSpin,
+    setisSpin} =useContext(carContext);
   return (
     <>
 
    {/* top   buttons */}
-
+  <Bookingmodel />
    <div className='div-btn '>
       <Row className='div-btn-row'>
         <Col span={3} ><button  id='package-btns' type="button" class="btn btn-outline-light ">All</button></Col>
@@ -28,14 +36,17 @@ function Packages() {
     </div>
 
     <div className='packages-card-container'>
-    <Row className='vehicles-card-row' >  
+    {isSpin? (<Spinner />) :
+    (<Row className='vehicles-card-row' >  
+ 
  {
         packages.map((car,index)=>{
-         return <Col xs={24} sm={12} md={12} lg={10} xl={10}  style={{marginTop:"40px"}} >  <Pcard car={car} key={index}/> </Col>
+         return <Col xs={24} sm={12} md={12} lg={10} xl={10}  style={{marginTop:"40px"}} >  <Pcard car={car} detail={car.vehicle}  key={index}/> </Col>
 
         })
       }
-</Row>
+</Row>)
+}
 
 
 

@@ -250,12 +250,14 @@ body {
 
 /* css for select package page */
 #scrollspy {
-  background-color: white;
-  height: 400px;
+  background-color: #e9ebee;
+  height: auto;
   width: 45%;
   margin: auto;
-  padding: "25px";
+  padding: "60px";
   margin-top: 30px;
+  border-radius: 10px;
+  padding-block: 5px;
 }
 #scrollspy-div {
   height: 140px;
@@ -288,12 +290,19 @@ body {
   width: 100%;
   display: flex;
   padding: 10px;
+  border-radius: 7px;
 }
 #scrlspycrd:hover{
   opacity: 0.7;
   height: 99%;
   width: 99%;
-  background-color: whitesmoke;
+  background-color: #e9ebee;
+}
+.clicked{
+  opacity: 0.7;
+  height: 99%;
+  width: 99%;
+  background-color: #e9ebee;
 }
 #scrlspycrd img {
   margin-right: 30px;
@@ -325,7 +334,22 @@ body {
   margin: auto;
   margin-block: 15px;
 }
-
+/* userbookings */
+#maincontainer-ubookings{
+  height: auto;
+  width: 90%;
+  padding: 50px;
+  background-color:white;
+  margin: auto;
+  margin-top: 100px;
+}
+#table-row{
+  background-color: white;
+}
+#table-row:hover{
+  background-color: whitesmoke;
+  opacity: 0.7;
+}
 
 @media (max-width: 576px) {
   /* for otp page */
@@ -367,10 +391,10 @@ body {
   }
   /* for select package */
   #scrollspy {
-    height: 400px;
+    height: auto;
     width: 90%;
     margin: auto;
-    padding: "10px";
+    padding: "20px";
     margin-top: 30px;
   }
   #scrollspy-div {
@@ -400,13 +424,17 @@ body {
     height: auto;
     display: block;
     padding: 30px;
+    
   }
   .div-btn {
     height: auto;
     margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   #package-btns {
-    width: 260px;
+    width: 220px;
     margin-top: 10px;
     margin-right: 10px;
   }

@@ -1,8 +1,25 @@
 import { Col } from 'antd'
-import React from 'react'
-
+import React, { useContext } from 'react'
+import carContext from '../context/cars/carContext'
+import { useNavigate } from 'react-router-dom'
 function Pcard(props) {
+const{isModelOpen,setisModelOpen,choosedPackage,
+  setchoosedPackage}=useContext(carContext)
+const navigate=useNavigate()
+const handleClick=(values)=>{
+  let isUserLogin=localStorage.getItem("jwtoken")
 
+  console.log(values)
+
+
+  if(isUserLogin){
+    setchoosedPackage(values)
+  setisModelOpen(true)
+  }
+  else{
+    navigate('/login')
+  }
+}
 
     return (
     <>
@@ -10,9 +27,9 @@ function Pcard(props) {
     <div>
         <Col  style={{ backgroundColor: "black", opacity: 0.9 }}>
           <div className="card-item">
-            <h4 style={{color:"white"}}>{props.car.heading}</h4>
+            <h4 style={{color:"white"}}>{props.car.title}</h4>
             <div className="card-img">
-              <img src="https://images.pexels.com/photos/215528/pexels-photo-215528.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" />
+              <img src={props.detail.imgURL} />
             </div>
             <h6 style={{color:"white"}}>{props.car.description}</h6>
             {/* leftcontent of card */}
@@ -20,21 +37,21 @@ function Pcard(props) {
               className="card-left-content "
               style={{ color: "white", fontSize: "1.1em" }}
             >
-              <h5>{props.car.name}</h5>
+              <h5>{props.detail.name}</h5>
               <br></br>
-              <p>{`Car type,${props.car.type}`}</p>
-              <p>{`Seats ${props.car.seats} , Bags ${props.car.bags}`}</p>
+              <p>{`Car type,${props.detail.cartype}`}</p>
+              <p>{`Seats ${props.detail.seats} , Bags ${props.detail.bags}`}</p>
               <p>
                 AC:{" "}
                 <span style={{ fontWeight: "bold", color: "lightgreen" }}>
                   ✓
                 </span>
-                , Doors: {props.car.doors}
+                , Doors: {props.detail.doors}
               </p>
             </div>
             
-            <button className="card-btn btn btn-outline-light">
-             {` Book for ${props.car.price} SAR`}
+            <button className="card-btn btn btn-outline-light" onClick={()=>handleClick(props.car)} >
+             {` Book for 1500 SAR`}
             </button>
           </div>
         </Col>

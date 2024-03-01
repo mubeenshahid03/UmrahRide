@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   ArrowLeftOutlined,
   ArrowRightOutlined,
@@ -15,19 +15,25 @@ import carContext from '../context/cars/carContext';
 import { Button, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 function Selectpackage() {
-    const {cars,setcars,fetchallvehicles,selectPackage,addpkg}=useContext(carContext)
+  
+    const {cars,setcars,fetchallvehicles,selectPackage,addpkg,addbooking,fetchspecificcars,selectedcars}=useContext(carContext)
+    
+    
     const navigate =useNavigate()
     useEffect(() => {
-      fetchallvehicles()
+      fetchspecificcars()
     }, [])
       const handlearrowright=()=>{
+        
+        
+        
         if(!localStorage.getItem("jwtoken")){
           navigate('/login')
           message.info("Please Login")
         }
         else{
           if(selectPackage){
-            addpkg();
+            addbooking()
             //here is the component of personzel info 
             navigate('/customerinfo')
           }
@@ -120,12 +126,13 @@ function Selectpackage() {
       style={{
         
         backgroundColor: 'white',
-        overflowY: 'auto', // Setting overflow to auto makes it scrollable if content exceeds the height
+        // overflowY: 'auto', // Setting overflow to auto makes it scrollable if content exceeds the height
+      
       }}
     >
         
-      {cars.map((car, index) => (
-        <div id='scrollspy-div'><Scrlspycrd  car={car} key={index} /> </div>
+      {selectedcars.map((car, index) => (
+        <div id='scrollspy-div'><Scrlspycrd  car={car.vehicle} key={index} /> </div>
       ))}
         
     </div>

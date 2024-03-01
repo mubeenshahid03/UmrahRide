@@ -11,9 +11,9 @@ function CustomerInfo() {
   const navigate=useNavigate()
   // State object to store customer information
   const [customerInfo, setCustomerInfo] = useState({
-    customerName: "",
-    customerEmail: "",
-    customerWhatsapp: "",
+    name: "",
+    email: "",
+    whatsapp: "",
   });
 
   // Function to handle input changes and update the state
@@ -25,7 +25,8 @@ function CustomerInfo() {
     });
   };
   const handleSubmit=async()=>{
-    if(!customerInfo.customerEmail||!customerInfo.customerName||!customerInfo.customerWhatsapp){
+    console.log(customerInfo)
+    if(!customerInfo.name||!customerInfo.email||!customerInfo.whatsapp){
         return message.error("Please fill complete Form!")
     }
     console.log("customr info",customerInfo)
@@ -36,7 +37,7 @@ function CustomerInfo() {
     else{
       try {
         const response = await fetch(
-          "http://localhost:8000/api/users/customerinfo",
+          "https://umrah-ride-backend-wr.vercel.app/api/users/customerinfo",
           {
             method: "POST",
             headers: {
@@ -49,8 +50,8 @@ function CustomerInfo() {
         let json = await response.json();
         console.log("from customerinfo")
         console.log(json)
-        message.success("Saved successfully!")
-        navigate("/bookingsummary")
+        message.success("Saved  successfully!")
+        navigate("/home")
       
       } catch (error) {
         console.log("error in frontend customerinfo path",error)
@@ -65,32 +66,32 @@ function CustomerInfo() {
           <Title level={2} style={{ color: "white" }}>
             Customer Info
           </Title>
-          <Form.Item name="hotel_name">
-            <label htmlFor="hotel_name" className="label-booking">
+          <Form.Item name="name">
+            <label htmlFor="name" className="label-booking">
               Name:
             </label>
             <Input
               placeholder="Enter your name"
-              onChange={(e) => handleInputChange("customerName", e.target.value)}
+              onChange={(e) => handleInputChange("name", e.target.value)}
             />
           </Form.Item>
-          <Form.Item name="datepicker">
-            <label htmlFor="datepicker" className="label-booking">
+          <Form.Item name="email">
+            <label htmlFor="email" className="label-booking">
               Email:
             </label>
             <Input
               placeholder="Enter your email"
-              onChange={(e) => handleInputChange("customerEmail", e.target.value)}
+              onChange={(e) => handleInputChange("email", e.target.value)}
             />
           </Form.Item>
-          <Form.Item name="pickup">
+          <Form.Item name="whatsapp">
             <label htmlFor="whatsapp" className="label-booking">
               Whatsapp:
             </label>
             <Input
               placeholder="Enter whatsapp number"
               onChange={(e) =>
-                handleInputChange("customerWhatsapp", e.target.value)
+                handleInputChange("whatsapp", e.target.value)
               }
             />
           </Form.Item>

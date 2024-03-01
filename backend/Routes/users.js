@@ -3,45 +3,42 @@ const router = express.Router();
 const fetchuser = require("../Middleware/fetchuser");
 const User = require("../model/User");
 var jwt=require("jsonwebtoken")
-const MY_SECRET_KEY="IAMMUBEENIAMA$OODBOY"
-// path 1   http://localhost:8000/api/users/adduser
+const MY_SECRET_KEY=process.env.MYSECRETKEY
+// Path: http://localhost:8000/api/users/adduser
 router.post("/adduser", async (request, response) => {
-    console.log(request.body)
-    console.log("request body")
-    try {
+  try {
     const { phone, booking } = request.body;
-   
-    let registeredUser= await User.findOne({phone:phone})
-    if(registeredUser){
-        const olddata={
-            user:{
-            id:registeredUser.id
-            },
+    
+    let registeredUser = await User.findOne({ phone: phone });
+    
+    if (registeredUser) {
+      const olddata = {
+        user: {
+          id: registeredUser.id
         }
-        const authtoken =await jwt.sign(olddata,MY_SECRET_KEY)
-        
-        response.json({authtoken,registeredUser})
-    }
-    else{
-        //creat and save user in DB
-    let newuser =await User.create({ phone, booking });
-    
-    
-    const data={
-        user:{
-        id:newuser.id
-        },
-    }
-    const authtoken =await jwt.sign(data,MY_SECRET_KEY)
-    
-    response.json({authtoken,newuser})
-    
+      };
+      const authtoken = await jwt.sign(olddata, MY_SECRET_KEY);
+      
+      response.json({ authtoken, registeredUser });
+    } else {
+      let newUser = await User.create({ phone, booking, createdAt: new Date() });
+      
+      if (!newUser) {
+        throw new Error("Failed to create a new user.");
+      }
+      
+      const data = {
+        user: {
+          id: newUser.id
+        }
+      };
+      const authtoken = await jwt.sign(data, MY_SECRET_KEY);
+      
+      response.json({ authtoken, newUser });
     }
   } catch (error) {
-    console.log("error in backemd add user path");
-    console.log(error)
-   
-    response.status(400).json({ error: "Error in backend add user path" });
+    console.error("Error in backend add user path:", error);
+    response.status(500).json({ error: "Internal server error" });
   }
 });
 
@@ -91,52 +88,23 @@ router.post('/getuser',fetchuser, async (request,response)=>{
   })
 
 // route 4 add booking obj inDB  http://localhost:8000/api/users/addbooking
-router.post('/addbooking', fetchuser, async (request, response) => {
-  try {
-    console.log("from backend");
-    console.log(request.body);
-
-    if (!request.body.bookingInfo) {
-      return response.status(401).json({ error: "body not received in add booking" });
-    }
-
-    // Updating the user document by setting the bookings field with the new bookingInfo
-    const updatedUser = await User.findByIdAndUpdate(
-      request.user.id,
-      {
-        $set: {
-          'bookings.destination': request.body.bookingInfo.destination,
-          'bookings.hotelname':request.body.bookingInfo.hotel_name,
-          'bookings.date':request.body.bookingInfo.datepicker,
-          'bookings.pickup':request.body.bookingInfo.pickup,
-          'bookings.comments':request.body.bookingInfo.comments,
-        },
-      },
-      { new: true }
-    );
-
-    response.json(updatedUser);
-  } catch (error) {
-    console.log("error in api/users/addbooking" + error);
-  }
-});
 
 
 //5 route  store customer info in their documents http://localhost:8000/api/users/customerinfo
 router.post('/customerinfo', fetchuser, async (request, response) => {
   console.log(request.body)
   try {
-    const{customerName,customerEmail,customerWhatsapp}=request.body.customerInfo
-    if(!customerName||!customerEmail||!customerWhatsapp){
+    const{name,email,whatsapp}=request.body.customerInfo
+    if(!name||!email||!whatsapp){
       return response.status(401).json({error:"note received the complete customerinfo"})
     }
     const updatedUser = await User.findByIdAndUpdate(
       request.user.id,
       {
         $set: {
-          'customerName': customerName,
-          'customerEmail':customerEmail,
-          'customerWhatsapp':customerWhatsapp
+          'name': name,
+          'email':email,
+          'whatsapp':whatsapp
         },
       },
       { new: true }
