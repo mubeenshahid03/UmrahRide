@@ -36,7 +36,7 @@ function Packages() {
     </div>
 
     <div className='packages-card-container'>
-    {isSpin? (<Spinner />) :
+    {isSpin? (<div style={{textAlign:"center",marginBottom:"60px"}} ><Spinner  /></div>) :
     (<Row className='vehicles-card-row' >  
  
  {
