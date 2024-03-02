@@ -79,8 +79,8 @@ function Booking() {
   return (
     <>
       <div className="header">
-        <h3 className="header-h6 mt-5">Welcome! Book you umrah ride</h3>
-        <h6 className="header-h6 mb-5">Book now bets cab service</h6>
+        <h3 className="header-h6 mt-5">Welcome! Book your umrah ride</h3>
+        <h6 className="header-h6 mb-5">Book now best cab service</h6>
       </div>
 
       <div>
