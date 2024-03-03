@@ -3,21 +3,22 @@ import carContext from "../context/cars/carContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Tooltip } from "antd";
-import Spinner from './Spinner'
+import Spinner from "./Spinner";
 function Userbookings() {
-  const { bookingSummary, setbookingSummary,isSpin,setisSpin } = useContext(carContext);
+  const { bookingSummary, setbookingSummary, isSpin, setisSpin } =
+    useContext(carContext);
   const [ubookings, setubookings] = useState([]);
   const navigate = useNavigate();
   useEffect(() => {
     fetchUserBookings();
   }, []);
   const formatDate = (dateString) => {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
   const formatTime = (timeString) => {
-    const options = { hour: 'numeric', minute: 'numeric', hour12: true };
+    const options = { hour: "numeric", minute: "numeric", hour12: true };
     return new Date(timeString).toLocaleTimeString(undefined, options);
   };
   const handleClick = (booking) => {
@@ -26,9 +27,9 @@ function Userbookings() {
     localStorage.setItem("bookingsummary", JSON.stringify(booking));
     navigate("/bookingsummary");
   };
-  const handleDelete = async(booking) => {
+  const handleDelete = async (booking) => {
     console.log(booking);
-    console.log(booking._id)
+    console.log(booking._id);
     try {
       const response = await fetch(
         "https://umrah-ride-backend-wr.vercel.app/api/bookings/deletebooking",
@@ -38,21 +39,19 @@ function Userbookings() {
             "Content-Type": "application/json",
             "auth-token": localStorage.getItem("jwtoken"),
           },
-          body: JSON.stringify({bookingid:booking._id})
-
+          body: JSON.stringify({ bookingid: booking._id }),
         }
       );
       let json = await response.json();
       console.log(json);
       fetchUserBookings();
-      
     } catch (error) {
       console.log("error from UserBookinng", error);
     }
   };
 
   const fetchUserBookings = async () => {
-    setisSpin(true)
+    setisSpin(true);
     try {
       const response = await fetch(
         "https://umrah-ride-backend-wr.vercel.app/api/pricings/userbookings",
@@ -67,7 +66,7 @@ function Userbookings() {
       let json = await response.json();
       console.log(json);
       setubookings(json);
-      setisSpin(false)
+      setisSpin(false);
     } catch (error) {
       console.log("error from UserBookinng", error);
     }
@@ -82,70 +81,95 @@ function Userbookings() {
           Bookings Summary{" "}
         </h3>
         <div class="table-responsive">
-          {isSpin? (<div style={{textAlign:"center",marginBottom:"60px"}} ><Spinner  /></div>):(
-        <table className="table">
-          <thead>
-            <tr>
-              <th scope="col">imgURL</th>
-              <th scope="col">Phone Number</th>
-              <th scope="col">Destination</th>
-              <th scope="col">Car</th>
-              <th scope="col">Cartype</th>
-              <th scope="col">Date</th>
-              <th scope="col">time</th>
-              
-              <th scope="col">Hotel</th>
-              <th scope="col">Price</th>
-              <th scope="col">Booking status</th>
-              <th>buttons</th>
-            </tr>
-          </thead>
-          <tbody>
+          {isSpin ? (
+            <div style={{ textAlign: "center", marginBottom: "60px" }}>
+              <Spinner />
+            </div>
+          ) : (
+            <table className="table">
+              <thead>
+                <tr>
+                  <th scope="col">imgURL</th>
+                  <th scope="col">Phone Number</th>
+                  <th scope="col">Destination</th>
+                  <th scope="col">Car</th>
+                  <th scope="col">Cartype</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">time</th>
 
-            {ubookings.map((booking) => (
-              <tr
-                key={booking._id}
-                id="table-row"
-                >
-                <td>
-                  <img
-                    height="80px"
-                    width="80px"
-                    src={booking.vehicle.imgURL}
-                    alt={booking.vehicle.name}
-                onClick={() => handleClick(booking)}
-                  />
-                </td>
-                <td>{booking.user.phone}</td>
-                <td>{booking.isPackage ? (
-    <Tooltip title={booking.pkg.description}>
-      <span>booking description</span>
-    </Tooltip>
-  ) : (
-    <span>{booking.destination.from} to {booking.destination.to}</span>
-  )}</td>
-                <td>{booking.vehicle.name}</td>
-                <td>{booking.vehicle.cartype}</td>
-                <td>{formatDate(booking.datepicker)}</td>
-      
-      <td>{formatTime(booking.datepicker)}</td>
-                <td>{booking.isPackage? booking.pkg.title : booking.hotel_name?  booking.hotel_name : booking.flightno}</td>
-                <td>{booking.isPackage? booking.pkg.price :booking.pricing.price}</td>
-                <td>{new Date(booking.datepicker).getTime() - new Date().getTime()>24*60*60*1000? "present" : "outdated" }</td>
-                <td>
-                <td>
-  {(new Date(booking.datepicker).getTime() - new Date().getTime()) > 24 * 60 * 60 * 1000 && (
-    <button className="btn btn-danger" onClick={() => handleDelete(booking)}>Delete</button>
-  )}
-</td>
+                  <th scope="col">Hotel</th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Booking status</th>
+                  <th>buttons</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ubookings.map((booking) => (
+                  <tr key={booking._id} id="table-row">
+                    <td>
+                      <img
+                        height="80px"
+                        width="80px"
+                        src={booking.vehicle.imgURL}
+                        alt={booking.vehicle.name}
+                        onClick={() => handleClick(booking)}
+                      />
+                    </td>
+                    <td>{booking.user.phone}</td>
+                    <td>
+                      {booking.isPackage ? (
+                        <Tooltip title={booking.pkg.description}>
+                          <span>booking description</span>
+                        </Tooltip>
+                      ) : (
+                        <span>
+                          {booking.destination.from} to {booking.destination.to}
+                        </span>
+                      )}
+                    </td>
+                    <td>{booking.vehicle.name}</td>
+                    <td>{booking.vehicle.cartype}</td>
+                    <td>{formatDate(booking.datepicker)}</td>
 
-</td>
-
-              </tr>
-            ))}
-          </tbody>
-        </table>
-        )}
+                    <td>{formatTime(booking.datepicker)}</td>
+                    <td>
+                      {booking.isPackage
+                        ? booking.pkg.title
+                        : booking.hotel_name
+                        ? booking.hotel_name
+                        : booking.flightno}
+                    </td>
+                    <td>
+                      {booking.isPackage
+                        ? booking.pkg.price
+                        : booking.pricing.price}
+                    </td>
+                    <td>
+                      {new Date(booking.datepicker).getTime() -
+                        new Date().getTime() >
+                      24 * 60 * 60 * 1000
+                        ? "present"
+                        : "outdated"}
+                    </td>
+                    <td>
+                      <td>
+                        {new Date(booking.datepicker).getTime() -
+                          new Date().getTime() >
+                          24 * 60 * 60 * 1000 && (
+                          <button
+                            className="btn btn-danger"
+                            onClick={() => handleDelete(booking)}
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </td>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
       </div>
     </>

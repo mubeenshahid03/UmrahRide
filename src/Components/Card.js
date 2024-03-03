@@ -2,11 +2,10 @@ import { Col } from "antd";
 import React from "react";
 
 function Card(props) {
-  
   return (
     <>
       <div>
-        <Col  style={{ backgroundColor: "black", opacity: 0.9 }}>
+        <Col style={{ backgroundColor: "black", opacity: 0.9 }}>
           <div className="card-item">
             <div className="card-img">
               <img src={props.car.imgURL} />

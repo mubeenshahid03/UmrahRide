@@ -5,17 +5,16 @@ import { useContext } from "react";
 import carContext from "../context/cars/carContext";
 import firebase from "../firebase";
 function Otp() {
-  const { otpCode,setotpCode,verifyOtp,Number } = useContext(carContext);
+  const { otpCode, setotpCode, verifyOtp, Number } = useContext(carContext);
   const [OTP, setOTP] = useState(null);
   const handleOTPinput = (otp) => {
     setOTP(otp);
-    setotpCode(otp)
+    setotpCode(otp);
   };
   const displayOTP = () => {
     console.log(OTP);
   };
 
-  
   return (
     <>
       <div className="otp-container">

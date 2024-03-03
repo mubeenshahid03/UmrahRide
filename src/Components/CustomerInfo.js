@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 
 function CustomerInfo() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
   // State object to store customer information
   const [customerInfo, setCustomerInfo] = useState({
     name: "",
@@ -18,23 +18,21 @@ function CustomerInfo() {
 
   // Function to handle input changes and update the state
   const handleInputChange = (field, value) => {
- 
     setCustomerInfo({
       ...customerInfo,
       [field]: value,
     });
   };
-  const handleSubmit=async()=>{
-    console.log(customerInfo)
-    if(!customerInfo.name||!customerInfo.email||!customerInfo.whatsapp){
-        return message.error("Please fill complete Form!")
+  const handleSubmit = async () => {
+    console.log(customerInfo);
+    if (!customerInfo.name || !customerInfo.email || !customerInfo.whatsapp) {
+      return message.error("Please fill complete Form!");
     }
-    console.log("customr info",customerInfo)
-    if(!localStorage.getItem("jwtoken")){
-      navigate("/login")
-      return message.info("Please login!")
-    }
-    else{
+    console.log("customr info", customerInfo);
+    if (!localStorage.getItem("jwtoken")) {
+      navigate("/login");
+      return message.info("Please login!");
+    } else {
       try {
         const response = await fetch(
           "https://umrah-ride-backend-wr.vercel.app/api/users/customerinfo",
@@ -42,22 +40,21 @@ function CustomerInfo() {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "auth-token":localStorage.getItem("jwtoken"),
+              "auth-token": localStorage.getItem("jwtoken"),
             },
-            body: JSON.stringify({customerInfo})
+            body: JSON.stringify({ customerInfo }),
           }
         );
         let json = await response.json();
-        console.log("from customerinfo")
-        console.log(json)
-        message.success("Saved  successfully!")
-        navigate("/home")
-      
+        console.log("from customerinfo");
+        console.log(json);
+        message.success("Saved  successfully!");
+        navigate("/home");
       } catch (error) {
-        console.log("error in frontend customerinfo path",error)
+        console.log("error in frontend customerinfo path", error);
       }
     }
-  }
+  };
 
   return (
     <>
@@ -90,9 +87,7 @@ function CustomerInfo() {
             </label>
             <Input
               placeholder="Enter whatsapp number"
-              onChange={(e) =>
-                handleInputChange("whatsapp", e.target.value)
-              }
+              onChange={(e) => handleInputChange("whatsapp", e.target.value)}
             />
           </Form.Item>
 

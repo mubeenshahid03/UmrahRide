@@ -4,7 +4,7 @@ import { message } from "antd";
 import firebase from "../../firebase";
 import { useNavigate } from "react-router-dom";
 const CarState = (props) => {
-    const navigate=useNavigate()
+  const navigate = useNavigate();
   let iCars = [];
 
   let iPackages = [
@@ -134,22 +134,19 @@ const CarState = (props) => {
   //below state disabled the getOTP button when user click on it
   const [isDisplaygetOTP, setisDisplaygetOTP] = useState(false);
   const [otpCode, setotpCode] = useState(null);
-  const [isSpin, setisSpin] = useState(false)
-//for booking.js
-const [bookingInfo, setbookingInfo] = useState(null)
+  const [isSpin, setisSpin] = useState(false);
+  //for booking.js
+  const [bookingInfo, setbookingInfo] = useState(null);
 
+  // for selectpackage.js
+  const [selectPackage, setselectPackage] = useState(null);
+  //for model that open in packages
+  const [isModelOpen, setisModelOpen] = useState(false);
+  //for booking of package in packages
+  const [choosedPackage, setchoosedPackage] = useState();
+  //const [bookPackage, setbookPackage] = useState()
+  const [pkgbooking, setpkgbooking] = useState({});
 
-// for selectpackage.js
-const [selectPackage, setselectPackage] = useState(null)
-//for model that open in packages
-const [isModelOpen, setisModelOpen] = useState(false)
-//for booking of package in packages
-const [choosedPackage, setchoosedPackage] = useState()
-//const [bookPackage, setbookPackage] = useState()
-const [pkgbooking, setpkgbooking] = useState({})
-
-
-  
   const addUser = async () => {
     try {
       const response = await fetch(
@@ -159,52 +156,41 @@ const [pkgbooking, setpkgbooking] = useState({})
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ phone: Number, booking: "Makkah package" })
+          body: JSON.stringify({ phone: Number, booking: "Makkah package" }),
         }
       );
       let json = await response.json();
-      console.log("from frontend ok ok o k")
-       console.log(json);
+      console.log("from frontend ok ok o k");
+      console.log(json);
       // console.log(json.authtoken)
       // console.log(json.registeredUser._id)
       // console.log(json.authtoken)
-const token=json.authtoken
-if(token){
-       localStorage.setItem("jwtoken",json.authtoken)
-}
-else{
-  message.error("token could not store")
-}
-      
-      navigate('/home')
-      
+      const token = json.authtoken;
+      if (token) {
+        localStorage.setItem("jwtoken", json.authtoken);
+      } else {
+        message.error("token could not store");
+      }
+
+      navigate("/home");
     } catch (error) {
       console.log("error in frontend add user" + error);
     }
   };
 
+  const setupRecaptcha = async () => {
+    const recaptcha = new firebase.auth.RecaptchaVerifier(
+      "recaptcha-container",
+      {}
+    );
+    recaptcha.render();
+    return firebase.auth().signInWithPhoneNumber(Number, recaptcha);
+  };
 
-
-
-  
-const setupRecaptcha=async()=>{
-  const recaptcha = new firebase.auth.RecaptchaVerifier(
-          "recaptcha-container",
-          {}
-        );
-        recaptcha.render()
-        return  firebase.auth().signInWithPhoneNumber(Number,recaptcha)
-}
-
-// console.log("boookininfo from context")
-// console.log(bookingInfo)
-// console.log("pkg info from context")
-// console.log(selectPackage)
-
-
-
-
-
+  // console.log("boookininfo from context")
+  // console.log(bookingInfo)
+  // console.log("pkg info from context")
+  // console.log(selectPackage)
 
   // api request to fetch all vehicles
   const fetchallvehicles = async () => {
@@ -249,10 +235,13 @@ const setupRecaptcha=async()=>{
   //functionality for multer that send img path to server
   const sendimg = async (formData) => {
     try {
-      const response = await fetch("https://umrah-ride-backend-wr.vercel.app/api/upload", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://umrah-ride-backend-wr.vercel.app/api/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
       const json = await response.json();
       console.log(json.imagePath);
       const imagePath = json.imagePath;
@@ -266,196 +255,191 @@ const setupRecaptcha=async()=>{
     }
   };
 
-//fetching destination from http://localhost:8000/api/destinations/fetchdestinations
-const [destinations, setdestinations] = useState([])
-const fetchdestinations = async () => {
-  try {
-    const response = await fetch(
-      "https://umrah-ride-backend-wr.vercel.app/api/destinations/fetchdestinations",
-      {
-        method: "GET",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-      }
-    );
-    let json = await response.json();
-    console.log(json);
-    console.log("above from fetchdestiantion")
-    setdestinations(json)
-  } catch (error) {
-    console.log("error in frontend fetchdestinations" + error);
-  }
-};
+  //fetching destination from http://localhost:8000/api/destinations/fetchdestinations
+  const [destinations, setdestinations] = useState([]);
+  const fetchdestinations = async () => {
+    try {
+      const response = await fetch(
+        "https://umrah-ride-backend-wr.vercel.app/api/destinations/fetchdestinations",
+        {
+          method: "GET",
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
+        }
+      );
+      let json = await response.json();
+      console.log(json);
+      console.log("above from fetchdestiantion");
+      setdestinations(json);
+    } catch (error) {
+      console.log("error in frontend fetchdestinations" + error);
+    }
+  };
 
-const [selectedcars, setselectedcars] = useState([])
-const [destinationId, setdestinationId] = useState("")
+  const [selectedcars, setselectedcars] = useState([]);
+  const [destinationId, setdestinationId] = useState("");
 
-const showspecificcar=async()=>{
-const selectedDestination=bookingInfo.destination
-  // console.log(selectedDestination,"selecteddestination")
-  const [from, to] = selectedDestination.split('-');
-  console.log(from)
-  console.log(to)
- let ok= destinations.filter((destination)=>{return destination.from===from})
-console.log(ok)
-let selectedDestinationId=ok[0]._id
-setdestinationId(selectedDestinationId)
-console.log(selectedDestinationId)
-localStorage.setItem("destinationid",selectedDestinationId)
-fetchspecificcars()
-navigate("/selectpackage")
-}
-
-
-const fetchspecificcars=async()=>{
-  
-  let destId=localStorage.getItem("destinationid")
-  
-  try {
-    console.log(destId)
-    const response = await fetch(
-      `https://umrah-ride-backend-wr.vercel.app/api/pricings/${destId}`,
-      {
-        method: "GET",
-        // headers: {
-        //   "Content-Type": "application/json",
-        // },
-      }
-    );
-    let json = await response.json();
-    // console.log(json);
-    // console.log("above from selected destination")
-    setselectedcars(json)  
-  } catch (error) {
-    console.log("error from frontend selected destination",error)
-  }
-}
-
-
-// const addpkg=async()=>{
-//   try {
-//     const response = await fetch(
-//       "http://localhost:8000/api/bookings/addbooking",
-//       {
-//         method: "POST",
-//         headers: {
-//           "Content-Type": "application/json",
-//           "auth-token":localStorage.getItem("jwtoken"),
-//         },
-//         body: JSON.stringify({selectPackage})
-//       }
-//     );
-//     let json = await response.json();
-//     console.log("from addpkg")
-//     console.log(json)
+  const showspecificcar = async () => {
+    const selectedDestination = bookingInfo.destination;
+    // console.log(selectedDestination,"selecteddestination")
+    const [from, to] = selectedDestination.split("-");
+    console.log(from);
+    console.log(to);
+    let ok = destinations.filter((destination) => {
+      return destination.from === from;
+    });
+    console.log(ok);
+    let selectedDestinationId = ok[0]._id;
+    setdestinationId(selectedDestinationId);
+    console.log(selectedDestinationId);
+    localStorage.setItem("destinationid", selectedDestinationId);
+    fetchspecificcars();
     
-//   } catch (error) {
-//     console.log("error in frontend add package frontend" + error);
-//   }
+    navigate("/selectpackage");
+  };
 
+  const fetchspecificcars = async () => {
+    let destId = localStorage.getItem("destinationid");
 
-// }
-const [bookingstatus, setbookingstatus] = useState("0")
-//api path to add booking obj inDB http://localhost:8000/api/users/addbooking
-const addbooking=async()=>{
-  
-  // console.log(bookingInfo)
-  // console.log(destinationId)
-  console.log(selectPackage)
-  // console.log(selectPackage._id)
-  
+    try {
+      console.log(destId);
+      const response = await fetch(
+        `https://umrah-ride-backend-wr.vercel.app/api/pricings/${destId}`,
+        {
+          method: "GET",
+          // headers: {
+          //   "Content-Type": "application/json",
+          // },
+        }
+      );
+      let json = await response.json();
+      console.log(json);
+      console.log("above from selected destination")
+      setselectedcars(json);
+    } catch (error) {
+      console.log("error from frontend selected destination", error);
+    }
+  };
 
-  // Append new properties to the bookingInfo object
-  bookingInfo.vehicleId=selectPackage._id
-  bookingInfo.destinationId = localStorage.getItem("destinationid");
-  bookingInfo.price = selectPackage.price;
-  bookingInfo.isPackage=false;
-  bookingInfo.packageId="null";
-  bookingInfo.bookingstatus=bookingstatus
-  
+  // const addpkg=async()=>{
+  //   try {
+  //     const response = await fetch(
+  //       "http://localhost:8000/api/bookings/addbooking",
+  //       {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "auth-token":localStorage.getItem("jwtoken"),
+  //         },
+  //         body: JSON.stringify({selectPackage})
+  //       }
+  //     );
+  //     let json = await response.json();
+  //     console.log("from addpkg")
+  //     console.log(json)
 
-  try {
-    const response = await fetch(
-      "https://umrah-ride-backend-wr.vercel.app/api/bookings/addbooking",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token":localStorage.getItem("jwtoken"),
-        },
-        body: JSON.stringify({bookingInfo})
-      }
-    );
-    let json = await response.json();
-    // console.log("from addbooking")
-    // console.log(json)
-    // message.success("bookingadded")
-  } catch (error) {
-    console.log("error in frontend add booking frontend" + error);
-  } 
-}
-const [bookingSummary, setbookingSummary] = useState({})
+  //   } catch (error) {
+  //     console.log("error in frontend add package frontend" + error);
+  //   }
 
-//below are the reques for fetching bookings http://localhost:8000/api/bookings/fetchallpackages
-const fetchallpackages = async () => {
-  try {
-   setisSpin(true)
-    const response = await fetch(
-      "https://umrah-ride-backend-wr.vercel.app/api/bookings/fetchallpackages",
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    let json = await response.json();
-    console.log(json);
-    setpackages(json)
-   // console.log("cars")
-  setisSpin(false)
-    
-  } catch (error) {
-    console.log("error in frontend fetchallpackages" + error);
-  }
-};
+  // }
+  const [bookingstatus, setbookingstatus] = useState("0");
+  //api path to add booking obj inDB http://localhost:8000/api/users/addbooking
+  const addbooking = async () => {
+    // console.log(bookingInfo)
+    // console.log(destinationId)
+    console.log(selectPackage);
+    // console.log(selectPackage._id)
 
-//api request to add pkgbooking http://localhost:8000/api/bookings/addpkgbooking
+    // Append new properties to the bookingInfo object
+    bookingInfo.vehicleId = selectPackage._id;
+    bookingInfo.destinationId = localStorage.getItem("destinationid");
+    bookingInfo.price = selectPackage.price;
+    bookingInfo.isPackage = false;
+    bookingInfo.packageId = "null";
+    bookingInfo.bookingstatus = bookingstatus;
 
-const addpkgbooking=async(bookPackage)=>{
-console.log("ok")
-//  console.log(bookPackage.datepicker.$d)
-  pkgbooking.name=bookPackage.name;
-  pkgbooking.email=bookPackage.email;
-  pkgbooking.datepicker=bookPackage.datepicker.$d;
-  pkgbooking.vehicleid=choosedPackage.vehicle._id;
-  pkgbooking.packageid=choosedPackage._id;
-  pkgbooking.isPackage=true;
-  pkgbooking.bookingstatus="0"
-  // console.log("pkgbooking",pkgbooking)
+    try {
+      const response = await fetch(
+        "https://umrah-ride-backend-wr.vercel.app/api/bookings/addbooking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("jwtoken"),
+          },
+          body: JSON.stringify({ bookingInfo }),
+        }
+      );
+      let json = await response.json();
+      // console.log("from addbooking")
+      // console.log(json)
+      // message.success("bookingadded")
+    } catch (error) {
+      console.log("error in frontend add booking frontend" + error);
+    }
+  };
+  const [bookingSummary, setbookingSummary] = useState({});
 
-  try {
-    const response = await fetch(
-      "https://umrah-ride-backend-wr.vercel.app/api/bookings/addpkgbooking",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "auth-token":localStorage.getItem("jwtoken"),
-        },
-        body: JSON.stringify({pkgbooking})
-      }
-    );
-    let json = await response.json();
-    //console.log("from addpkgbooking")
-    // console.log(json)
-    message.success("pkgbookingadded")
-      setisModelOpen(false)
-  } catch (error) {
-    console.log("error in frontend add pkg booking frontend" + error);
-  } 
-}
+  //below are the reques for fetching bookings http://localhost:8000/api/bookings/fetchallpackages
+  const fetchallpackages = async () => {
+    try {
+      setisSpin(true);
+      const response = await fetch(
+        "https://umrah-ride-backend-wr.vercel.app/api/bookings/fetchallpackages",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      let json = await response.json();
+      console.log(json);
+      setpackages(json);
+      // console.log("cars")
+      setisSpin(false);
+    } catch (error) {
+      console.log("error in frontend fetchallpackages" + error);
+    }
+  };
+
+  //api request to add pkgbooking http://localhost:8000/api/bookings/addpkgbooking
+
+  const addpkgbooking = async (bookPackage) => {
+    console.log("ok");
+    //  console.log(bookPackage.datepicker.$d)
+    pkgbooking.name = bookPackage.name;
+    pkgbooking.email = bookPackage.email;
+    pkgbooking.datepicker = bookPackage.datepicker.$d;
+    pkgbooking.vehicleid = choosedPackage.vehicle._id;
+    pkgbooking.packageid = choosedPackage._id;
+    pkgbooking.isPackage = true;
+    pkgbooking.bookingstatus = "0";
+    // console.log("pkgbooking",pkgbooking)
+
+    try {
+      const response = await fetch(
+        "https://umrah-ride-backend-wr.vercel.app/api/bookings/addpkgbooking",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "auth-token": localStorage.getItem("jwtoken"),
+          },
+          body: JSON.stringify({ pkgbooking }),
+        }
+      );
+      let json = await response.json();
+      //console.log("from addpkgbooking")
+      // console.log(json)
+      message.success("pkgbookingadded");
+      setisModelOpen(false);
+    } catch (error) {
+      console.log("error in frontend add pkg booking frontend" + error);
+    }
+  };
 
   return (
     <carContext.Provider
@@ -498,7 +482,7 @@ console.log("ok")
         setisModelOpen,
         choosedPackage,
         setchoosedPackage,
-        addpkgbooking
+        addpkgbooking,
       }}
     >
       {props.children}

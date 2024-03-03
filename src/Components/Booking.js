@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { DatePicker, Form, Input, Select, Radio, Row, Col, Button, message } from "antd";
+import {
+  DatePicker,
+  Form,
+  Input,
+  Select,
+  Radio,
+  Row,
+  Col,
+  Button,
+  message,
+} from "antd";
 import {
   ArrowRightOutlined,
   CalendarFilled,
@@ -13,26 +23,33 @@ import TextArea from "antd/es/input/TextArea";
 import { useContext } from "react";
 import carContext from "../context/cars/carContext";
 import { useNavigate } from "react-router-dom";
-import { generateFCMToken,messaging } from "../firebase";
+import { generateFCMToken, messaging } from "../firebase";
 
 function Booking() {
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
-  const{bookingInfo,setbookingInfo,addbooking,fetchdestinations,destinations,showspecificcar}=useContext(carContext)
-  
+  const {
+    bookingInfo,
+    setbookingInfo,
+    addbooking,
+    fetchdestinations,
+    destinations,
+    showspecificcar,
+  } = useContext(carContext);
+
   useEffect(() => {
-    fetchdestinations()
+    fetchdestinations();
     generateFCMToken()
       .then((currentToken) => {
         if (currentToken) {
           console.log("FCM Token:", currentToken);
-          try{
-          messaging.onMessage(payload => {
-            console.log("Message received. Payload:", payload);
-          })
-        }catch(error){
-            console.log("error in receiving",error )
-        }
+          try {
+            messaging.onMessage((payload) => {
+              console.log("Message received. Payload:", payload);
+            });
+          } catch (error) {
+            console.log("error in receiving", error);
+          }
           // Send this token to your backend server
         } else {
           console.log("No registration token available.");
@@ -41,9 +58,7 @@ function Booking() {
       .catch((error) => {
         console.error("An error occurred while retrieving token:", error);
       });
-  }, [])
-  
-  
+  }, []);
 
   const handleInputChange = (changedValues) => {
     // Update bookingInfo with the changed form values
@@ -59,22 +74,14 @@ function Booking() {
     setPickupFrom(e.target.value);
   };
 
-
-  const onFinish =(formvalues) => {
-    
+  const onFinish = (formvalues) => {
     // console.log("bookingokookookok")
     // console.log("values", formvalues);
     console.log(formvalues.datepicker.$d);
-    
+
     showspecificcar();
-    
-    
-    
-    
   };
-  const handlebooking=()=>{
-    
-  }
+  const handlebooking = () => {};
 
   return (
     <>
@@ -145,27 +152,34 @@ function Booking() {
       </div>
 
       <div className="main_form">
-        <Form className="custom-form" onFinish={onFinish}  onValuesChange={handleInputChange}>
+        <Form
+          className="custom-form"
+          onFinish={onFinish}
+          onValuesChange={handleInputChange}
+        >
           <Row gutter={16}>
             <Col span={12}>
-            <Form.Item
-  style={{ color: "white" }}
-  name="destination"
-  label={<span style={{ color: "white" }}>Destination:</span>}
-  rules={[{ required: true, message: "Select destination" }]}
->
-<Select
-    className="destination_select"
-    placeholder="Select destination"
-  >
-    {Array.isArray(destinations) && destinations.map((destination) => (
-      <Select.Option key={destination._id} value={`${destination.from}-${destination.to}`} >
-        {destination.from} to {destination.to}
-      </Select.Option>
-    ))}
-  </Select>
-</Form.Item>
-
+              <Form.Item
+                style={{ color: "white" }}
+                name="destination"
+                label={<span style={{ color: "white" }}>Destination:</span>}
+                rules={[{ required: true, message: "Select destination" }]}
+              >
+                <Select
+                  className="destination_select"
+                  placeholder="Select destination"
+                >
+                  {Array.isArray(destinations) &&
+                    destinations.map((destination) => (
+                      <Select.Option
+                        key={destination._id}
+                        value={`${destination.from}-${destination.to}`}
+                      >
+                        {destination.from} to {destination.to}
+                      </Select.Option>
+                    ))}
+                </Select>
+              </Form.Item>
             </Col>
             <Col span={12}>
               {/* <Form.Item
@@ -179,29 +193,29 @@ function Booking() {
                 />
               </Form.Item> */}
               {pickupFrom === "Hotel" && (
-            <Form.Item
-              name="hotel_name"
-              label={<span style={{ color: "white" }}>Hotel Name:</span>}
-              rules={[{ required: true, message: "Enter hotel name" }]}
-            >
-              <Input
-                className="hotel_input"
-                placeholder="Enter hotel name"
-              />
-            </Form.Item>
-          )}
-          {pickupFrom === "Airport" && (
-            <Form.Item
-              name="flight_number"
-              label={<span style={{ color: "white" }}>Flight Number:</span>}
-              rules={[{ required: true, message: "Enter flight number" }]}
-            >
-              <Input
-                className="flight_input"
-                placeholder="Enter flight number"
-              />
-            </Form.Item>
-          )}
+                <Form.Item
+                  name="hotel_name"
+                  label={<span style={{ color: "white" }}>Hotel Name:</span>}
+                  rules={[{ required: true, message: "Enter hotel name" }]}
+                >
+                  <Input
+                    className="hotel_input"
+                    placeholder="Enter hotel name"
+                  />
+                </Form.Item>
+              )}
+              {pickupFrom === "Airport" && (
+                <Form.Item
+                  name="flight_number"
+                  label={<span style={{ color: "white" }}>Flight Number:</span>}
+                  rules={[{ required: true, message: "Enter flight number" }]}
+                >
+                  <Input
+                    className="flight_input"
+                    placeholder="Enter flight number"
+                  />
+                </Form.Item>
+              )}
             </Col>
           </Row>
           <Row gutter={16}>
@@ -214,7 +228,7 @@ function Booking() {
               >
                 <DatePicker
                   className="mx-2"
-                  suffixIcon={<CalendarFilled style={{ color: "black" , }} />}
+                  suffixIcon={<CalendarFilled style={{ color: "black" }} />}
                 />
               </Form.Item>
             </Col>
@@ -224,14 +238,14 @@ function Booking() {
                 label={<span style={{ color: "white" }}>Pickup From:</span>}
                 rules={[{ required: true, message: "Select pickup from" }]}
               >
-               <Radio.Group onChange={handlePickupChange} value={pickupFrom}>
-              <Radio style={{ color: "white" }} value={"Airport"}>
-                Airport
-              </Radio>
-              <Radio style={{ color: "white" }} value={"Hotel"}>
-                Hotel
-              </Radio>
-            </Radio.Group>
+                <Radio.Group onChange={handlePickupChange} value={pickupFrom}>
+                  <Radio style={{ color: "white" }} value={"Airport"}>
+                    Airport
+                  </Radio>
+                  <Radio style={{ color: "white" }} value={"Hotel"}>
+                    Hotel
+                  </Radio>
+                </Radio.Group>
               </Form.Item>
             </Col>
           </Row>
@@ -246,16 +260,15 @@ function Booking() {
               </Form.Item>
             </Col>
           </Row>
-          <Row style={{display:"flex",justifyContent:"end"}}>
-            <Form.Item >
+          <Row style={{ display: "flex", justifyContent: "end" }}>
+            <Form.Item>
               <Button
-              onClick={handlebooking}
+                onClick={handlebooking}
                 htmlType="submit"
                 shape="circle"
                 icon={<ArrowRightOutlined />}
                 size="large"
-                style={{border:"none"}}
-
+                style={{ border: "none" }}
               />
             </Form.Item>
           </Row>

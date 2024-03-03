@@ -11,62 +11,59 @@ function ContactUs() {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     const formData = new FormData();
-    formData.append('file', file);  
+    formData.append("file", file);
     sendimg(formData);
-  }
+  };
 
-  
   const [ContactsInfo, setContactsInfo] = useState({
     name: "",
-      email: "",
-      subject: "",
-      message:""
+    email: "",
+    subject: "",
+    message: "",
+  });
 
+  // Function to handle input changes and update the state
+  const handleInputChange = (field, value) => {
+    setContactsInfo({
+      ...ContactsInfo,
+      [field]: value,
     });
-  
-    // Function to handle input changes and update the state
-    const handleInputChange = (field, value) => {
-   
-      setContactsInfo({
-        ...ContactsInfo,
-        [field]: value,
-      });
-    };
-    const handleSubmit=async()=>{
-      console.log(ContactsInfo)
-      if(!ContactsInfo.name||!ContactsInfo.email||!ContactsInfo.subject ||!ContactsInfo.message){
-          return message.error("Please fill complete Form!")
-      }
-     
-
-        try {
-          const response = await fetch(
-            "https://umrah-ride-backend-wr.vercel.app/api/bookings/addcontacts",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                // "auth-token":localStorage.getItem("jwtoken"),
-              },
-              body: JSON.stringify({ContactsInfo})
-            }
-          );
-          let json = await response.json();
-          console.log("from customerinfo")
-          console.log(json)
-          message.success("Thanks for Review!")
-          
-        
-        } catch (error) {
-          console.log("error in frontend contactus path",error)
-        }
-      
+  };
+  const handleSubmit = async () => {
+    console.log(ContactsInfo);
+    if (
+      !ContactsInfo.name ||
+      !ContactsInfo.email ||
+      !ContactsInfo.subject ||
+      !ContactsInfo.message
+    ) {
+      return message.error("Please fill complete Form!");
     }
+
+    try {
+      const response = await fetch(
+        "https://umrah-ride-backend-wr.vercel.app/api/bookings/addcontacts",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            // "auth-token":localStorage.getItem("jwtoken"),
+          },
+          body: JSON.stringify({ ContactsInfo }),
+        }
+      );
+      let json = await response.json();
+      console.log("from customerinfo");
+      console.log(json);
+      message.success("Thanks for Review!");
+    } catch (error) {
+      console.log("error in frontend contactus path", error);
+    }
+  };
 
   return (
     <>
       <div className="contactus_form">
-      
         <div className="custom-form">
           <Title level={2} style={{ color: "white" }}>
             Contacts Us
@@ -95,9 +92,7 @@ function ContactUs() {
             </label>
             <Input
               placeholder="Enter subject"
-              onChange={(e) =>
-                handleInputChange("subject", e.target.value)
-              }
+              onChange={(e) => handleInputChange("subject", e.target.value)}
             />
           </Form.Item>
           <Form.Item name="message">
@@ -106,9 +101,7 @@ function ContactUs() {
             </label>
             <Input
               placeholder="Enter message"
-              onChange={(e) =>
-                handleInputChange("message", e.target.value)
-              }
+              onChange={(e) => handleInputChange("message", e.target.value)}
             />
           </Form.Item>
 
@@ -122,7 +115,7 @@ function ContactUs() {
         </div>
 
         {/* uncomment only below two lines and also from index.js backend file to implement multer functionality */}
-{/*       
+        {/*       
         <input type="file" name="file" accept="image/*" onChange={handleFileChange} />
         <img height="100px" width="100px" src={imgURL} alt="here" /> */}
       </div>
