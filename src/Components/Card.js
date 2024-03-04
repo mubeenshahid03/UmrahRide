@@ -23,7 +23,7 @@ function Card(props) {
                 <span style={{ fontWeight: "bold", color: "lightgreen" }}>
                   ✓
                 </span>
-                , Doors: {props.car.doors}
+                {/* , Doors: {props.car.doors} */}
               </p>
             </div>
             {/* right content of card */}
