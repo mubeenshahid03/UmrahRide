@@ -43,7 +43,7 @@ function Pcard(props) {
                 <span style={{ fontWeight: "bold", color: "lightgreen" }}>
                   ✓
                 </span>
-                , Doors: {props.detail.doors}
+                {/* , Doors: {props.detail.doors} */}
               </p>
             </div>
 
@@ -51,7 +51,7 @@ function Pcard(props) {
               className="card-btn btn btn-outline-light"
               onClick={() => handleClick(props.car)}
             >
-              {` Book for 1500 SAR`}
+              {`${props.car.price} SAR `}
             </button>
           </div>
         </Col>

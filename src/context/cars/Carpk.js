@@ -381,7 +381,7 @@ const CarState = (props) => {
     }
   };
   const [bookingSummary, setbookingSummary] = useState({});
-
+ // https://umrah-ride-backend-wr.vercel.app/api/bookings/fetchallpackages
   //below are the reques for fetching bookings http://localhost:8000/api/bookings/fetchallpackages
   const fetchallpackages = async () => {
     try {

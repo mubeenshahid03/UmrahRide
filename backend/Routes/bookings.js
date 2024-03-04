@@ -102,33 +102,38 @@ router.post("/addcontacts", async (request, response) => {
 //api calls for packages
 // path 1  http://localhost:8000/api/bookings/fetchallpackages
 router.get("/fetchallpackages", async (request, response) => {
-  try {
-    // Find bookings associated with the user
-    const packages = await Package.find();
-
-    // Iterate through each booking and fetch additional data
-    const bookingsWithDetails = await Promise.all(
-      packages.map(async (pkg) => {
-        console.log(pkg.vehicleid);
-        const vehicle = await Vehicle.findOne({ _id: pkg.vehicleid });
-
-        return {
-          _id: pkg._id,
-
-          title: pkg.title,
-          description: pkg.description,
-          vehicle,
-          __v: pkg.__v,
-        };
-      })
-    );
-
-    // console.log(bookingsWithDetails);
-    response.status(200).json(bookingsWithDetails);
-  } catch (error) {
-    console.log("error in api/vehicles/fetchallpackages" + error);
-  }
-});
+    try {
+      // Find bookings associated with the user
+      const packages = await Package.find();
+  
+      // Iterate through each booking and fetch additional data
+      const bookingsWithDetails = await Promise.all(
+        packages.map(async (pkg) => {
+          console.log("from packages")
+          
+        //   console.log(pkg);
+          const vehicle = await Vehicle.findOne({ _id: pkg.vehicleid });
+  
+          
+  
+          return {
+            _id: pkg._id,
+            title: pkg.title,
+            description: pkg.description,
+            price: pkg.price, 
+            vehicle,
+            __v: pkg.__v,
+          };
+        })
+      );
+  
+      // console.log(bookingsWithDetails);
+      response.status(200).json(bookingsWithDetails);
+    } catch (error) {
+      console.log("error in api/vehicles/fetchallpackages" + error);
+    }
+  });
+  
 
 //add package in Bookings table
 // http://localhost:8000/api/bookings/addpkgbooking
