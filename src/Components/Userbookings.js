@@ -17,10 +17,7 @@ function Userbookings() {
     return new Date(dateString).toLocaleDateString(undefined, options);
   };
 
-  const formatTime = (timeString) => {
-    const options = { hour: "numeric", minute: "numeric", hour12: true };
-    return new Date(timeString).toLocaleTimeString(undefined, options);
-  };
+  
   const handleClick = (booking) => {
     console.log(booking);
     setbookingSummary(booking);
@@ -32,7 +29,7 @@ function Userbookings() {
     console.log(booking._id);
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/bookings/deletebooking",
+        "http://localhost:8000/api/bookings/deletebooking",
         {
           method: "POST",
           headers: {
@@ -54,7 +51,7 @@ function Userbookings() {
     setisSpin(true);
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/pricings/userbookings",
+        "http://localhost:8000/api/pricings/userbookings",
         {
           method: "POST",
           headers: {
@@ -97,7 +94,7 @@ function Userbookings() {
                   <th scope="col">Date</th>
                   <th scope="col">time</th>
 
-                  <th scope="col">Hotel</th>
+                  <th scope="col">pickup from</th>
                   <th scope="col">Price</th>
                   <th scope="col">Booking status</th>
                   <th>buttons</th>
@@ -131,7 +128,7 @@ function Userbookings() {
                     <td>{booking.vehicle.cartype}</td>
                     <td>{formatDate(booking.datepicker)}</td>
 
-                    <td>{formatTime(booking.datepicker)}</td>
+                    <td>{ booking.timepicker? booking.timepicker : "null"}</td>
                     <td>
                       {booking.isPackage
                         ? booking.pkg.title
@@ -145,25 +142,25 @@ function Userbookings() {
                         : booking.pricing.price}
                     </td>
                     <td>
-                      {new Date(booking.datepicker).getTime() -
-                        new Date().getTime() >
-                      24 * 60 * 60 * 1000
-                        ? "present"
-                        : "outdated"}
-                    </td>
+  {new Date(booking.datepicker + 'T' + booking.timepicker).getTime() -
+    new Date().getTime() >
+    24 * 60 * 60 * 1000
+    ? "present"
+    : "outdated"}
+</td>
                     <td>
-                      <td>
-                        {new Date(booking.datepicker).getTime() -
-                          new Date().getTime() >
-                          24 * 60 * 60 * 1000 && (
-                          <button
-                            className="btn btn-danger"
-                            onClick={() => handleDelete(booking)}
-                          >
-                            Delete
-                          </button>
-                        )}
-                      </td>
+                    <td>
+  {new Date(booking.datepicker + 'T' + booking.timepicker).getTime() -
+    new Date().getTime() >
+    24 * 60 * 60 * 1000 && (
+    <button
+      className="btn btn-danger"
+      onClick={() => handleDelete(booking)}
+    >
+      Delete
+    </button>
+  )}
+</td>
                     </td>
                   </tr>
                 ))}

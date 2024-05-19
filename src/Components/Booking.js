@@ -77,7 +77,7 @@ function Booking() {
   const onFinish = (formvalues) => {
     // console.log("bookingokookookok")
     // console.log("values", formvalues);
-    console.log(formvalues.datepicker.$d);
+    // console.log(formvalues.datepicker.$d);
 
     showspecificcar();
   };
@@ -219,19 +219,24 @@ function Booking() {
             </Col>
           </Row>
           <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item
-                name="datepicker"
-                style={{ width: "90%", marginLeft: "35px" }}
-                label={<span style={{ color: "white" }}>Date:</span>}
-                rules={[{ required: true, message: "Select date" }]}
-              >
-                <DatePicker
-                  className="mx-2"
-                  suffixIcon={<CalendarFilled style={{ color: "black" }} />}
-                />
-              </Form.Item>
-            </Col>
+          <Col span={12}>
+          <Form.Item
+  name="date_time"
+  style={{ width: "90%", marginLeft: "35px" }}
+  label={<span style={{ color: "white" }}>Date and Time:</span>}
+  rules={[{ required: true, message: "Select date and time" }]}
+>
+  <DatePicker
+    className="mx-2"
+    showTime={{ format: "hh:mm A" }}
+    format="YYYY-MM-DDTHH:mm:ss.SSSZ"
+    suffixIcon={<CalendarFilled style={{ color: "black" }} />}
+  />
+</Form.Item>
+
+
+</Col>
+
             <Col span={12}>
               <Form.Item
                 name="pickup"
@@ -254,7 +259,7 @@ function Booking() {
               <Form.Item
                 name="comments"
                 label={<span style={{ color: "white" }}>Comments:</span>}
-                rules={[{ required: true, message: "Enter Comments" }]}
+                
               >
                 <TextArea placeholder="your comments" />
               </Form.Item>

@@ -150,7 +150,7 @@ const CarState = (props) => {
   const addUser = async () => {
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/users/adduser",
+        "http://localhost:8000/api/users/adduser",
         {
           method: "POST",
           headers: {
@@ -196,7 +196,7 @@ const CarState = (props) => {
   const fetchallvehicles = async () => {
     try {
       const response = await fetch(
-        `https://umrah-ride-backend-wr.vercel.app/api/vehicles/fetchallvehicles/${userid}`,
+        `http://localhost:8000/api/vehicles/fetchallvehicles/${userid}`,
         {
           method: "GET",
           headers: {
@@ -216,7 +216,7 @@ const CarState = (props) => {
   const filtervehicles = async (cartype) => {
     try {
       const response = await fetch(
-        `https://umrah-ride-backend-wr.vercel.app/api/vehicles/filtervehicles/${cartype}`,
+        `http://localhost:8000/api/vehicles/filtervehicles/${cartype}`,
         {
           method: "GET",
           headers: {
@@ -236,7 +236,7 @@ const CarState = (props) => {
   const sendimg = async (formData) => {
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/upload",
+        "http://localhost:8000/api/upload",
         {
           method: "POST",
           body: formData,
@@ -260,7 +260,7 @@ const CarState = (props) => {
   const fetchdestinations = async () => {
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/destinations/fetchdestinations",
+        "http://localhost:8000/api/destinations/fetchdestinations",
         {
           method: "GET",
           // headers: {
@@ -305,7 +305,7 @@ const CarState = (props) => {
     try {
       console.log(destId);
       const response = await fetch(
-        `https://umrah-ride-backend-wr.vercel.app/api/pricings/${destId}`,
+        `http://localhost:8000/api/pricings/${destId}`,
         {
           method: "GET",
           // headers: {
@@ -347,7 +347,8 @@ const CarState = (props) => {
   const [bookingstatus, setbookingstatus] = useState("0");
   //api path to add booking obj inDB http://localhost:8000/api/users/addbooking
   const addbooking = async () => {
-    // console.log(bookingInfo)
+    console.log("bookinginfo")
+    console.log(bookingInfo)
     // console.log(destinationId)
     console.log(selectPackage);
     // console.log(selectPackage._id)
@@ -362,7 +363,7 @@ const CarState = (props) => {
 
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/bookings/addbooking",
+        "http://localhost:8000/api/bookings/addbooking",
         {
           method: "POST",
           headers: {
@@ -387,7 +388,7 @@ const CarState = (props) => {
     try {
       setisSpin(true);
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/bookings/fetchallpackages",
+        "http://localhost:8000/api/bookings/fetchallpackages",
         {
           method: "GET",
           headers: {
@@ -412,7 +413,7 @@ const CarState = (props) => {
     //  console.log(bookPackage.datepicker.$d)
     pkgbooking.name = bookPackage.name;
     pkgbooking.email = bookPackage.email;
-    pkgbooking.datepicker = bookPackage.datepicker.$d;
+    pkgbooking.datepicker = bookPackage.date_time;
     pkgbooking.vehicleid = choosedPackage.vehicle._id;
     pkgbooking.packageid = choosedPackage._id;
     pkgbooking.isPackage = true;
@@ -421,7 +422,7 @@ const CarState = (props) => {
 
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/bookings/addpkgbooking",
+        "http://localhost:8000/api/bookings/addpkgbooking",
         {
           method: "POST",
           headers: {

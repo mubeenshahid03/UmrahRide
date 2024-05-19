@@ -74,12 +74,20 @@ function Bookingmodel() {
             <Input size="large" placeholder="Enter phone" />
           </Form.Item>
           <Form.Item
-            name="datepicker"
-            label="Booking Date"
-            rules={[{ required: true, message: "Select date" }]}
-          >
-            <DatePicker className="mx-2" />
-          </Form.Item>
+          label="date/time"
+  name="date_time"
+  style={{ width: "90%"}}
+  
+  rules={[{ required: true, message: "Select date and time" }]}
+>
+  <DatePicker
+    className="mx-2"
+    showTime={{ format: "hh:mm A" }}
+    format="YYYY-MM-DDTHH:mm:ss.SSSZ"
+    suffixIcon={<CalendarFilled style={{ color: "black" }} />}
+  />
+</Form.Item>
+
 
           <Form.Item>
             <Button

@@ -35,7 +35,7 @@ function CustomerInfo() {
     } else {
       try {
         const response = await fetch(
-          "https://umrah-ride-backend-wr.vercel.app/api/users/customerinfo",
+          "http://localhost:8000/api/users/customerinfo",
           {
             method: "POST",
             headers: {

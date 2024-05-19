@@ -42,7 +42,7 @@ function ContactUs() {
 
     try {
       const response = await fetch(
-        "https://umrah-ride-backend-wr.vercel.app/api/bookings/addcontacts",
+        "http://localhost:8000/api/bookings/addcontacts",
         {
           method: "POST",
           headers: {
